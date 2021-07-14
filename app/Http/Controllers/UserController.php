@@ -6,35 +6,32 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function signup(){
-        return view('user.Register');
-    }
-    public function signups(Request $request){
-        $firstName = $request->get('firstname');
-        $lastName = $request->get('lastname');
-        $country = $request->get('country');
-        return $firstName . ' ' . $lastName . ' ' . $country;
-    }
-    public function login(){
-        return view('user.Login');
-    }
-    public function logins(Request $requests)
-    {
-        $fullName = $requests->get('fullName');
-        $email = $requests->get('email');
-        $phone = $requests->get('phone');
-        $address = $requests->get('address');
-        $identityCard = $requests->get('identityCard');
-        return view('user.Login-success',
-            ['fullName' => $fullName,
-                'email' => $email,
-                'phone' => $phone,
-                'address' => $address,
-                'identityCard' => $identityCard]);
+    public function login(Request $request){
+        $name = $request->get('name');
+        $email = $request->get('email');
+        $password = $request->get('password');
+        return sprintf('Welcome to admin page %s, email %s, password %s',
+            $name, $email, $password);
     }
 
-    public function getUserDetail($id)
-    {
-        return 'hello path' . $id;
+    public function getUserDetail($id){
+        return 'Hello path ' . $id;
+    }
+
+    //
+    public function signup(){
+        return view('user.register');
+    }
+
+    public function processSignup(Request $request){
+        $firstName = $request->get('firstname'); // lấy dữ liệu từ trường firstname ở trong form và gán ra biến $firstname
+        $lastName = $request->get('lastname');
+        $country = $request->get('country');
+        return view('user.register-success',
+            [
+                'firstName' => $firstName,
+                'lastName' => $lastName,
+                'country' => $country,
+            ]);
     }
 }
